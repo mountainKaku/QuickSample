@@ -10,34 +10,21 @@ import RealmSwift
 
 class DBManager {
     func findAll() -> Results<RealmGoods>? {
-        do {
-            let realm = try Realm()
-            return realm.objects(RealmGoods).sorted("id")
-        } catch {
-            print("failed")
-        }
-        return nil
+        let realm = try! Realm()
+        return realm.objects(RealmGoods.self).sorted(byKeyPath: "id")
     }
     
-    func update(goods: RealmGoods) {
-        do {
-            let realm = try Realm()
-            try! realm.write {
-                realm.add(goods, update: true)
-            }
-        } catch {
-            print("failed")
+    func update(_ goods: RealmGoods) {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(goods, update: true)
         }
     }
     
     func deleteAll() {
-        do {
-            let realm = try Realm()
-            try! realm.write {
-                realm.deleteAll()
-            }
-        } catch {
-            print("failed")
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
         }
     }
 }

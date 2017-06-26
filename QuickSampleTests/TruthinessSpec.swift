@@ -23,7 +23,7 @@ class TruthinessSpec : QuickSpec {
             context("when actual is not nil") {
                 it("pass with beTruthy") {
                     let str:String? = "hoge"
-                    expect(str).to(beTruthy())
+                    expect((str != nil) as Bool).to(beTruthy())
                 }
             }
             

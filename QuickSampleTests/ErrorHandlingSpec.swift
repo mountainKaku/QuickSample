@@ -18,19 +18,19 @@ class ErrorHandlingSpec : QuickSpec {
                     let str = ""
                     expect{ try self.printStr(str) }.to(throwError())
                     
-                    expect{ try self.printStr(str) }.to(throwError { (error: ErrorType) in
+                    expect{ try self.printStr(str) }.to(throwError { (error: Error) in
                         expect(error._domain).to(equal("the value is empty"))
                         expect(error._code).to(equal(-1))
                     })
                     
-                    expect{ try self.requestLogin(str) }.to(throwError(RequestError.Unknown))
+                    expect{ try self.requestLogin(str) }.to(throwError(RequestError.unknown))
                     expect{ try self.requestLogin(str) }.to(throwError(errorType: RequestError.self))
                 }
             }
         }
     }
     
-    func printStr(str: String) throws {
+    func printStr(_ str: String) throws {
         if str.isEmpty {
             throw NSError(domain: "the value is empty", code: -1, userInfo: nil)
         } else {
@@ -38,15 +38,15 @@ class ErrorHandlingSpec : QuickSpec {
         }
     }
     
-    func requestLogin(name: String) throws {
+    func requestLogin(_ name: String) throws {
         if name.isEmpty {
-            throw RequestError.Unknown
+            throw RequestError.unknown
         }
         // request processing...
     }
     
-    enum RequestError: ErrorType {
-        case Network
-        case Unknown
+    enum RequestError: Error {
+        case network
+        case unknown
     }
 }
